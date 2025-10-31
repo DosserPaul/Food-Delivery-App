@@ -4,6 +4,7 @@ import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import {useState} from "react";
 import {createUser} from "@/lib/appwrite";
+import * as Sentry from "@sentry/react";
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,6 +22,7 @@ const SignUp = () => {
 
       router.replace('/');
     } catch (error: any) {
+      Sentry.captureException(error);
       Alert.alert('Error', error.message);
     } finally {
       setIsSubmitting(false);

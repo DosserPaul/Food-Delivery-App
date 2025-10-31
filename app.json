@@ -38,6 +38,14 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "food-delivery-app_react-native",
+          "organization": "paul-a5t"
+        }
       ]
     ],
     "experiments": {
