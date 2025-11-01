@@ -14,6 +14,8 @@ for backend, auth & database) and NativeWind (for responsive, utility-first styl
 - ✅ **Seed Script** — One-click data seeding to populate your Appwrite database.
 - ✅ **Responsive Design** — Works seamlessly across iOS and Android.
 - ✅ **Cart Functionality** — Add, remove, and customize items in your cart before checkout.
+- ✅ **Sentry Integration** — Monitor and track errors in real-time for better app stability.
+- ✅ **Search & Filter** — Easily find menu items by name or category.
 
 ## Tech Stack
 
