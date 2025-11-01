@@ -1,5 +1,5 @@
 import {Account, Avatars, Client, Databases, ID, Query, Storage} from "react-native-appwrite";
-import {CreateUserParams, GetMenuParams, MenuItem, SignInParams} from "@/type";
+import {Category, CreateUserParams, GetMenuParams, MenuItem, SignInParams} from "@/type";
 
 
 export const appwriteConfig = {
@@ -85,7 +85,7 @@ export const getCurrentUser = async () => {
 export const getMenu = async ({category, query, limit = 6}: GetMenuParams): Promise<MenuItem[]> => {
   const queries: string[] = [];
 
-  if (category) queries.push(Query.equal("category", category));
+  if (category) queries.push(Query.equal("categories", category));
   if (query) queries.push(Query.search("name", query));
   if (limit) queries.push(Query.limit(limit));
 
@@ -106,7 +106,7 @@ export const getCategories = async () => {
       appwriteConfig.categoriesCollectionId,
     )
 
-    return categories.documents;
+    return categories.documents as unknown as Category[];
   } catch (e) {
     throw new Error(e as string);
   }

@@ -2,22 +2,20 @@ import {FlatList, Text, View} from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
 import useAppwrite from "@/lib/useAppwrite";
 import {getCategories, getMenu} from "@/lib/appwrite";
-import {useLocalSearchParams} from "expo-router";
+import {router, useLocalSearchParams} from "expo-router";
 import {useEffect} from "react";
 import CartButton from "@/components/CartButton";
 import cn from "clsx";
 import MenuCard from "@/components/MenuCard";
 import {MenuItem} from "@/type";
 
+import Filter from "@/components/Filter";
+import SearchBar from "@/components/SearchBar";
 
 const Search = () => {
   const {category, query} = useLocalSearchParams<{ query: string; category: string }>()
 
-  const {data, refetch, loading} = useAppwrite<MenuItem[], { category: string; query: string; limit: number }>({
-    fn: getMenu,
-    params: {category, query, limit: 6},
-  });
-
+  const {data, refetch, loading, error} = useAppwrite({fn: getMenu, params: {category, query, limit: 6,}});
   const {data: categories} = useAppwrite({fn: getCategories});
 
   useEffect(() => {
@@ -54,16 +52,12 @@ const Search = () => {
               <CartButton/>
             </View>
 
-            {/*TODO: Add search bar*/}
+            <SearchBar/>
 
-            {/*TODO: Add filter options*/}
+            <Filter categories={categories!}/>
           </View>
         )}
-        ListEmptyComponent={() => !loading && (
-          <Text className="paragraph text-center text-dark-100 mt-10">
-            No results found.
-          </Text>
-        )}
+        ListEmptyComponent={() => !loading && <Text>No results</Text>}
       />
     </SafeAreaView>
   )
