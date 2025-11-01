@@ -11,6 +11,10 @@ interface Customization {
   name: string;
   price: number;
   type: "topping" | "side" | "size" | "crust" | string;
+
+  // Stripe
+  stripe_product_id: string;
+  stripe_price_id: string;
 }
 
 interface MenuItem {
@@ -23,6 +27,10 @@ interface MenuItem {
   protein: number;
   category_name: string;
   customizations: string[];
+
+  // Stripe
+  stripe_product_id: string;
+  stripe_price_id: string;
 }
 
 interface DummyData {
@@ -128,6 +136,9 @@ async function seed(): Promise<void> {
         name: cus.name,
         price: cus.price,
         type: cus.type,
+
+        // Stripe
+        stripe_price_id: cus.stripe_price_id,
       },
     });
     customizationMap[cus.name] = doc.$id;
@@ -152,6 +163,11 @@ async function seed(): Promise<void> {
         calories: item.calories,
         protein: item.protein,
         categories: categoryMap[item.category_name], // ✅ matches schema
+
+        // Stripe
+        stripe_price_id: item.stripe_price_id,
+
+        // TODO: customizations are linked later
       },
     });
 

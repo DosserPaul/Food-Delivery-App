@@ -9,28 +9,135 @@ const dummyData = {
   ],
 
   customizations: [
-    // Toppings
-    {name: "Extra Cheese", price: 25, type: "topping"},
-    {name: "Jalapeños", price: 20, type: "topping"},
-    {name: "Onions", price: 10, type: "topping"},
-    {name: "Olives", price: 15, type: "topping"},
-    {name: "Mushrooms", price: 18, type: "topping"},
-    {name: "Tomatoes", price: 10, type: "topping"},
-    {name: "Bacon", price: 30, type: "topping"},
-    {name: "Avocado", price: 35, type: "topping"},
+    {
+      name: "Extra Cheese",
+      price: 25,
+      type: "topping",
+      stripe_product_id: "prod_TLMRpSHAz6VKlO",
+      stripe_price_id: "price_1SOfiUGlLeLGMnm2ZmWtNkjJ"
+    },
+    {
+      name: "Jalapeños",
+      price: 20,
+      type: "topping",
+      stripe_product_id: "prod_TLMRjwnT0Iya96",
+      stripe_price_id: "price_1SOfiVGlLeLGMnm2dggwFu9I"
+    },
+    {
+      name: "Onions",
+      price: 10,
+      type: "topping",
+      stripe_product_id: "prod_TLMR0dc0zazwCr",
+      stripe_price_id: "price_1SOfiXGlLeLGMnm2Jjr5ae6g"
+    },
+    {
+      name: "Olives",
+      price: 15,
+      type: "topping",
+      stripe_product_id: "prod_TLMRbT3n6jxALj",
+      stripe_price_id: "price_1SOfiZGlLeLGMnm2ads7kZiH"
+    },
+    {
+      name: "Mushrooms",
+      price: 18,
+      type: "topping",
+      stripe_product_id: "prod_TLMRHOHllCrFU2",
+      stripe_price_id: "price_1SOfiaGlLeLGMnm2riQOrH6p"
+    },
+    {
+      name: "Tomatoes",
+      price: 10,
+      type: "topping",
+      stripe_product_id: "prod_TLMRtKoRyHbYSB",
+      stripe_price_id: "price_1SOficGlLeLGMnm2wbByVTlO"
+    },
+    {
+      name: "Bacon",
+      price: 30,
+      type: "topping",
+      stripe_product_id: "prod_TLMRok15a3nHgy",
+      stripe_price_id: "price_1SOfidGlLeLGMnm2EKxKdsfF"
+    },
+    {
+      name: "Avocado",
+      price: 35,
+      type: "topping",
+      stripe_product_id: "prod_TLMR6uzubDAX63",
+      stripe_price_id: "price_1SOfifGlLeLGMnm2tWZLnIoj"
+    },
 
-    // Sides
-    {name: "Coke", price: 30, type: "side"},
-    {name: "Fries", price: 35, type: "side"},
-    {name: "Garlic Bread", price: 40, type: "side"},
-    {name: "Chicken Nuggets", price: 50, type: "side"},
-    {name: "Iced Tea", price: 28, type: "side"},
-    {name: "Salad", price: 33, type: "side"},
-    {name: "Potato Wedges", price: 38, type: "side"},
-    {name: "Mozzarella Sticks", price: 45, type: "side"},
-    {name: "Sweet Corn", price: 25, type: "side"},
-    {name: "Choco Lava Cake", price: 42, type: "side"},
+    {
+      name: "Coke",
+      price: 30,
+      type: "side",
+      stripe_product_id: "prod_TLMRlvXSvXbReE",
+      stripe_price_id: "price_1SOfigGlLeLGMnm2shpyOsTT"
+    },
+    {
+      name: "Fries",
+      price: 35,
+      type: "side",
+      stripe_product_id: "prod_TLMRVmFOyzsO1H",
+      stripe_price_id: "price_1SOfiiGlLeLGMnm2fuWixzB3"
+    },
+    {
+      name: "Garlic Bread",
+      price: 40,
+      type: "side",
+      stripe_product_id: "prod_TLMR0XCq7bYS9F",
+      stripe_price_id: "price_1SOfikGlLeLGMnm2yLRfZ1hV"
+    },
+    {
+      name: "Chicken Nuggets",
+      price: 50,
+      type: "side",
+      stripe_product_id: "prod_TLMRw2RFrlKxCR",
+      stripe_price_id: "price_1SOfimGlLeLGMnm2MWTgbLak"
+    },
+    {
+      name: "Iced Tea",
+      price: 28,
+      type: "side",
+      stripe_product_id: "prod_TLMRdhZ5saTXV8",
+      stripe_price_id: "price_1SOfioGlLeLGMnm25xPFVeD5"
+    },
+    {
+      name: "Salad",
+      price: 33,
+      type: "side",
+      stripe_product_id: "prod_TLMR3dBZhwOHEb",
+      stripe_price_id: "price_1SOfipGlLeLGMnm2lCSEMYHq"
+    },
+    {
+      name: "Potato Wedges",
+      price: 38,
+      type: "side",
+      stripe_product_id: "prod_TLMRuRCsk51kfK",
+      stripe_price_id: "price_1SOfirGlLeLGMnm24vtaSbEZ"
+    },
+    {
+      name: "Mozzarella Sticks",
+      price: 45,
+      type: "side",
+      stripe_product_id: "prod_TLMRUDGu3Z9UTl",
+      stripe_price_id: "price_1SOfisGlLeLGMnm2eYHMrgyD"
+    },
+    {
+      name: "Sweet Corn",
+      price: 25,
+      type: "side",
+      stripe_product_id: "prod_TLMRg3Cc74SudB",
+      stripe_price_id: "price_1SOfiuGlLeLGMnm27wNFSLQP"
+    },
+    {
+      name: "Choco Lava Cake",
+      price: 42,
+      type: "side",
+      stripe_product_id: "prod_TLMRUIIueqpPzy",
+      stripe_price_id: "price_1SOfiwGlLeLGMnm2qNCXahJM"
+    },
   ],
+
 
   menu: [
     {
@@ -44,6 +151,8 @@ const dummyData = {
       protein: 25,
       category_name: "Burgers",
       customizations: ["Extra Cheese", "Coke", "Fries", "Onions", "Bacon"],
+      stripe_product_id: "prod_TLMFrZaelv5hIn",
+      stripe_price_id: "price_1SOfXQGlLeLGMnm2MAJeuuQp"
     },
     {
       name: "Pepperoni Pizza",
@@ -55,13 +164,9 @@ const dummyData = {
       calories: 700,
       protein: 30,
       category_name: "Pizzas",
-      customizations: [
-        "Extra Cheese",
-        "Jalapeños",
-        "Garlic Bread",
-        "Coke",
-        "Olives",
-      ],
+      customizations: ["Extra Cheese", "Jalapeños", "Garlic Bread", "Coke", "Olives"],
+      stripe_product_id: "prod_TLMFdxgu3YKs9o",
+      stripe_price_id: "price_1SOfXRGlLeLGMnm2LJRnHEca"
     },
     {
       name: "Bean Burrito",
@@ -74,6 +179,8 @@ const dummyData = {
       protein: 18,
       category_name: "Burritos",
       customizations: ["Jalapeños", "Iced Tea", "Fries", "Salad"],
+      stripe_product_id: "prod_TLMFqPhdtxMnR3",
+      stripe_price_id: "price_1SOfXTGlLeLGMnm2BTtxYxDe"
     },
     {
       name: "BBQ Bacon Burger",
@@ -86,6 +193,8 @@ const dummyData = {
       protein: 29,
       category_name: "Burgers",
       customizations: ["Onions", "Fries", "Coke", "Bacon", "Avocado"],
+      stripe_product_id: "prod_TLMFr4E7q6kb6d",
+      stripe_price_id: "price_1SOfXUGlLeLGMnm22qdq2Cph"
     },
     {
       name: "Chicken Caesar Wrap",
@@ -98,6 +207,8 @@ const dummyData = {
       protein: 28,
       category_name: "Wraps",
       customizations: ["Extra Cheese", "Coke", "Potato Wedges", "Tomatoes"],
+      stripe_product_id: "prod_TLMGJkXVDLH7AD",
+      stripe_price_id: "price_1SOfXWGlLeLGMnm2Q95QnGQO"
     },
     {
       name: "Grilled Veggie Sandwich",
@@ -110,6 +221,8 @@ const dummyData = {
       protein: 19,
       category_name: "Sandwiches",
       customizations: ["Mushrooms", "Olives", "Mozzarella Sticks", "Iced Tea"],
+      stripe_product_id: "prod_TLMGmk5unmUIZH",
+      stripe_price_id: "price_1SOfXYGlLeLGMnm2JevhZszb"
     },
     {
       name: "Double Patty Burger",
@@ -121,13 +234,9 @@ const dummyData = {
       calories: 720,
       protein: 35,
       category_name: "Burgers",
-      customizations: [
-        "Extra Cheese",
-        "Onions",
-        "Fries",
-        "Coke",
-        "Chicken Nuggets",
-      ],
+      customizations: ["Extra Cheese", "Onions", "Fries", "Coke", "Chicken Nuggets"],
+      stripe_product_id: "prod_TLMG6H4btPpUIy",
+      stripe_price_id: "price_1SOfXZGlLeLGMnm2prPekwYx"
     },
     {
       name: "Paneer Tikka Wrap",
@@ -140,6 +249,8 @@ const dummyData = {
       protein: 20,
       category_name: "Wraps",
       customizations: ["Jalapeños", "Tomatoes", "Salad", "Fries", "Iced Tea"],
+      stripe_product_id: "prod_TLMGHjM1y2QRkE",
+      stripe_price_id: "price_1SOfXbGlLeLGMnm2jmZmWP2L"
     },
     {
       name: "Mexican Burrito Bowl",
@@ -152,6 +263,8 @@ const dummyData = {
       protein: 24,
       category_name: "Bowls",
       customizations: ["Avocado", "Sweet Corn", "Salad", "Iced Tea"],
+      stripe_product_id: "prod_TLMG3jJdo1OUSN",
+      stripe_price_id: "price_1SOfXdGlLeLGMnm2xO6j77R7"
     },
     {
       name: "Spicy Chicken Sandwich",
@@ -163,13 +276,9 @@ const dummyData = {
       calories: 540,
       protein: 26,
       category_name: "Sandwiches",
-      customizations: [
-        "Jalapeños",
-        "Onions",
-        "Fries",
-        "Coke",
-        "Choco Lava Cake",
-      ],
+      customizations: ["Jalapeños", "Onions", "Fries", "Coke", "Choco Lava Cake"],
+      stripe_product_id: "prod_TLMGlz3wj0KOWd",
+      stripe_price_id: "price_1SOfXfGlLeLGMnm25ZNY9f16"
     },
     {
       name: "Classic Margherita Pizza",
@@ -182,6 +291,8 @@ const dummyData = {
       protein: 21,
       category_name: "Pizzas",
       customizations: ["Extra Cheese", "Olives", "Coke", "Garlic Bread"],
+      stripe_product_id: "prod_TLMGuqVUGqlTLA",
+      stripe_price_id: "price_1SOfXgGlLeLGMnm2YEapIuVX"
     },
     {
       name: "Protein Power Bowl",
@@ -194,6 +305,8 @@ const dummyData = {
       protein: 38,
       category_name: "Bowls",
       customizations: ["Avocado", "Salad", "Sweet Corn", "Iced Tea"],
+      stripe_product_id: "prod_TLMGKUbZAVIReU",
+      stripe_price_id: "price_1SOfXiGlLeLGMnm2jH5nJMUm"
     },
     {
       name: "Paneer Burrito",
@@ -206,6 +319,8 @@ const dummyData = {
       protein: 22,
       category_name: "Burritos",
       customizations: ["Jalapeños", "Fries", "Garlic Bread", "Coke"],
+      stripe_product_id: "prod_TLMGpkvnI416Fh",
+      stripe_price_id: "price_1SOfXkGlLeLGMnm2ftu8gV6F"
     },
     {
       name: "Chicken Club Sandwich",
@@ -218,8 +333,11 @@ const dummyData = {
       protein: 31,
       category_name: "Sandwiches",
       customizations: ["Bacon", "Tomatoes", "Mozzarella Sticks", "Iced Tea"],
+      stripe_product_id: "prod_TLMGByicmUz5jY",
+      stripe_price_id: "price_1SOfXmGlLeLGMnm2VgXT1v4R"
     },
   ],
 };
+
 
 export default dummyData;
