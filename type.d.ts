@@ -9,6 +9,7 @@ export interface MenuItem extends Models.Document {
     protein: number;
     rating: number;
     type: string;
+    stripe_price_id: string;
 }
 
 export interface Category extends Models.Document {

@@ -1,4 +1,6 @@
-import {Text, View} from "react-native";
+import {Button, Text, View} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
+import seed from "@/lib/seed";
 
 const Profile = () => {
   return (
