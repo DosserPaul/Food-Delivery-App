@@ -17,6 +17,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
 
   addItem: (item) => {
+    console.log("Adding item:", item);
     const customizations = item.customizations ?? [];
 
     const existing = get().items.find(

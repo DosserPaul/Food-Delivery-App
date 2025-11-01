@@ -16,6 +16,12 @@ for backend, auth & database) and NativeWind (for responsive, utility-first styl
 - ✅ **Cart Functionality** — Add, remove, and customize items in your cart before checkout.
 - ✅ **Sentry Integration** — Monitor and track errors in real-time for better app stability.
 - ✅ **Search & Filter** — Easily find menu items by name or category.
+- ✅ **Stripe Integration** — *(Planned)* Seamless payment processing for orders.
+- ✅ **Order History** — *(Planned)* View past orders and reorder favorite meals.
+- ✅ **User Reviews & Ratings** — *(Planned)* Allow users to rate and review menu items.
+- ✅ **Favorites** — *(Planned)* Save favorite menu items for quick access.
+- ✅ **Social Media Integration** — *(Planned)* Share favorite meals on social platforms.
+- 
 
 ## Tech Stack
 
