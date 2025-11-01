@@ -1,5 +1,5 @@
 import {Account, Avatars, Client, Databases, ID, Query, Storage} from "react-native-appwrite";
-import {CreateUserParams, GetMenuParams, SignInParams} from "@/type";
+import {CreateUserParams, GetMenuParams, MenuItem, SignInParams} from "@/type";
 
 
 export const appwriteConfig = {
@@ -82,24 +82,22 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const getMenu = async ({category, query}: GetMenuParams) => {
-  try {
-    const queries: string[] = [];
+export const getMenu = async ({category, query, limit = 6}: GetMenuParams): Promise<MenuItem[]> => {
+  const queries: string[] = [];
 
-    if (category) queries.push(Query.equal('categories', category));
-    if (query) queries.push(Query.search('name', query));
+  if (category) queries.push(Query.equal("category", category));
+  if (query) queries.push(Query.search("name", query));
+  if (limit) queries.push(Query.limit(limit));
 
-    const menus = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.menuCollectionId,
-      queries,
-    )
+  const res = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.menuCollectionId,
+    queries
+  );
 
-    return menus.documents;
-  } catch (e) {
-    throw new Error(e as string);
-  }
-}
+  return res.documents as unknown as MenuItem[];
+};
+
 
 export const getCategories = async () => {
   try {
