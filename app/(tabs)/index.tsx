@@ -1,12 +1,30 @@
 import {SafeAreaView} from "react-native-safe-area-context";
 import {FlatList, Image, Pressable, Text, TouchableOpacity, View} from "react-native";
-import {Fragment} from "react";
+import {Fragment, useCallback} from "react";
 import cn from 'clsx';
 
 import {images, offers} from "@/constants";
 import CartButton from "@/components/CartButton";
+import {router} from "expo-router";
+
+const categoriesDict = {
+  "BURRITO DELIGHT": "6905dadb002a054d0f48",
+  "PIZZA PARTY": "6905dadb0021bdaa7738",
+  "BURGER BASH": "6905dadb001b72ced883",
+  "PIZZA PART": null,
+}
 
 export default function Index() {
+  const handleOnCardPress = useCallback((category: keyof typeof categoriesDict) => {
+    console.log(category);
+    const categoryId = categoriesDict[category];
+    router.push({
+      pathname: '/(tabs)/search',
+      params: {category: categoryId ?? undefined},
+    });
+  }, []);
+
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <FlatList
@@ -20,6 +38,7 @@ export default function Index() {
                 className={cn("offer-card", isEven ? 'flex-row-reverse' : 'flex-row')}
                 style={{backgroundColor: item.color}}
                 android_ripple={{color: "#fffff22"}}
+                onPress={() => handleOnCardPress(item.title as keyof typeof categoriesDict)}
               >
                 {({pressed}) => (
                   <Fragment>
