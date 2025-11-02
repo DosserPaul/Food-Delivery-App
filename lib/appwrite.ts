@@ -61,6 +61,14 @@ export const signIn = async ({email, password}: SignInParams) => {
   }
 }
 
+export const logOut = async () => {
+  try {
+    await account.deleteSessions();
+  } catch (e: any) {
+    throw new Error(e.message || 'Failed to log out');
+  }
+}
+
 export const getCurrentUser = async () => {
   try {
     const currentAccount = await account.get();
@@ -98,7 +106,6 @@ export const getMenu = async ({category, query, limit = 6}: GetMenuParams): Prom
 
   return res.documents as unknown as MenuItem[];
 };
-
 
 export const getCategories = async () => {
   try {
