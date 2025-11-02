@@ -5,6 +5,8 @@ import {useFonts} from "expo-font";
 import * as Sentry from '@sentry/react-native';
 import useAuthStore from "@/store/auth.store";
 import {StripeProvider} from "@stripe/stripe-react-native";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
+import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 
 Sentry.init({
   dsn: 'https://ca3d4adc13c94f7a1d7a92a09520cbe7@o4510286069497856.ingest.de.sentry.io/4510286075986000',
@@ -53,7 +55,11 @@ export default Sentry.wrap(function RootLayout() {
       merchantIdentifier={process.env.EXPO_PUBLIC_PLATFORM!}
       urlScheme="your-url-scheme"
     >
-      <Stack screenOptions={{headerShown: false}}/>
+      <GestureHandlerRootView className="flex-1">
+        <BottomSheetModalProvider>
+          <Stack screenOptions={{headerShown: false}}/>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </StripeProvider>
   );
 });

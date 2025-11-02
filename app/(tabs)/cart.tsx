@@ -1,34 +1,43 @@
-import React, {useState} from "react";
-import {ActivityIndicator, Alert, FlatList, Text, View,} from "react-native";
+import React, {useRef, useState} from "react";
+import {ActivityIndicator, FlatList, Text, View,} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import cn from "clsx";
+import {BottomSheetModal} from "@gorhom/bottom-sheet";
 import {useCartStore} from "@/store/cart.store";
+import useAuthStore from "@/store/auth.store";
 import CustomButton from "@/components/CustomButton";
 import CartItem from "@/components/CartItem";
 import CustomHeader from "@/components/CustomHeader";
-import {PaymentInfoStripeProps} from "@/type";
-import {initPaymentSheet, presentPaymentSheet,} from "@stripe/stripe-react-native";
-import useAuthStore from "@/store/auth.store";
+import {initPaymentSheet, presentPaymentSheet} from "@stripe/stripe-react-native";
+import PaymentModal from "@/components/PaymentModal";
 
-const PaymentInfoStripe = ({
-                             label,
-                             value,
-                             labelStyle,
-                             valueStyle,
-                           }: PaymentInfoStripeProps) => (
+const PaymentSummary = ({totalItems, totalPrice, deliveryFee, discount, finalAmount}: any) => (
+  <View className="mt-6 border border-gray-200 p-5 rounded-2xl">
+    <Text className="h3-bold text-dark-100 mb-5">Payment Summary</Text>
+
+    <Row label={`Total Items (${totalItems})`} value={`$${totalPrice.toFixed(2)}`}/>
+    <Row label="Delivery Fee" value={`$${deliveryFee.toFixed(2)}`}/>
+    <Row label="Discount" value={`- $${discount.toFixed(2)}`} valueStyle="!text-success"/>
+    <View className="border-t border-gray-300 my-2"/>
+    <Row
+      label="Total"
+      value={`$${finalAmount.toFixed(2)}`}
+      labelStyle="base-bold !text-dark-100"
+      valueStyle="base-bold !text-dark-100 !text-right"
+    />
+  </View>
+);
+
+const Row = ({label, value, labelStyle, valueStyle}: any) => (
   <View className="flex-between flex-row my-1">
-    <Text className={cn("paragraph-medium text-gray-200", labelStyle)}>
-      {label}
-    </Text>
-    <Text className={cn("paragraph-bold text-dark-100", valueStyle)}>
-      {value}
-    </Text>
+    <Text className={`paragraph-medium text-gray-200 ${labelStyle || ""}`}>{label}</Text>
+    <Text className={`paragraph-bold text-dark-100 ${valueStyle || ""}`}>{value}</Text>
   </View>
 );
 
 const Cart = () => {
   const {items, getTotalItems, getTotalPrice, clearCart} = useCartStore();
   const {user} = useAuthStore();
+
   const [loading, setLoading] = useState(false);
 
   const totalItems = getTotalItems();
@@ -37,75 +46,32 @@ const Cart = () => {
   const discount = 0.5;
   const finalAmount = totalPrice + deliveryFee - discount;
 
-  const handlePayment = async () => {
-    // Check if user is logged in
-    if (!user?.$id || !user?.email) {
-      Alert.alert("Error", "You must be logged in to make a payment.");
-      return;
-    }
+  const successModalRef = useRef<BottomSheetModal>(null);
+  const failModalRef = useRef<BottomSheetModal>(null);
 
-    // Check if cart has items
-    if (totalItems === 0) {
-      Alert.alert("Error", "Your cart is empty.");
+  const handlePayment = async () => {
+    if (!user?.$id || !user?.email || totalItems === 0) {
+      failModalRef.current?.present();
       return;
     }
 
     try {
       setLoading(true);
-
-      // Call Appwrite Function using fetch
-      console.log("🔍 Calling payment function:", {
-        userId: user.$id,
-        email: user.email,
-        amount: Math.round(finalAmount * 100),
+      const response = await fetch("https://69065ee7000e20aabd8a.fra.appwrite.run", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          amount: Math.round(finalAmount * 100),
+          currency: "eur",
+          userId: user.$id,
+          email: user.email,
+        }),
       });
 
-      const response = await fetch(
-        "https://69065ee7000e20aabd8a.fra.appwrite.run",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: Math.round(finalAmount * 100), // amount in cents
-            currency: "eur",
-            userId: user.$id,
-            email: user.email,
-          }),
-        }
-      );
-
-      console.log("✅ Response status:", response.status);
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("❌ Response error:", errorText);
-        throw new Error(
-          `Server responded with ${response.status}: ${errorText}`
-        );
-      }
-
-      // Parse JSON response
       const data = await response.json();
-      console.log("✅ Parsed payment data:", data);
+      if (!response.ok || data.error || !data.success) throw new Error(data.error);
 
-      // Check for errors in response
-      if (data.error || !data.success) {
-        throw new Error(data.error || "Payment initialization failed");
-      }
-
-      // Validate required fields
       const {paymentIntent, ephemeralKey, customer} = data;
-
-      if (!paymentIntent || !ephemeralKey || !customer) {
-        throw new Error(
-          "Missing required payment data from server. Please try again."
-        );
-      }
-
-      // Initialize Stripe Payment Sheet
       const {error: initError} = await initPaymentSheet({
         merchantDisplayName: "Food Delivery App",
         customerId: customer,
@@ -116,41 +82,20 @@ const Cart = () => {
           name: user.name || "Customer",
           email: user.email,
         },
-        returnURL: "your-app-scheme://stripe-redirect",
       });
 
-      if (initError) {
-        throw new Error(`Failed to initialize payment: ${initError.message}`);
-      }
+      if (initError) throw new Error(initError.message);
 
-      // Present the payment sheet
       const {error: paymentError} = await presentPaymentSheet();
-
       if (paymentError) {
-        // User cancelled or payment failed
-        if (paymentError.code === "Canceled") {
-          Alert.alert("Cancelled", "Payment was cancelled.");
-        } else {
-          Alert.alert("Payment Failed", paymentError.message);
-        }
+        failModalRef.current?.present();
       } else {
-        // Payment successful
-        Alert.alert(
-          "Success",
-          "Your order has been placed successfully!",
-          [
-            {
-              text: "OK",
-              onPress: () => clearCart(),
-            },
-          ]
-        );
+        clearCart();
+        successModalRef.current?.present();
       }
     } catch (err) {
       console.error("❌ Payment error:", err);
-      const errorMessage =
-        err instanceof Error ? err.message : "An unexpected error occurred";
-      Alert.alert("Payment Error", errorMessage);
+      failModalRef.current?.present();
     } finally {
       setLoading(false);
     }
@@ -172,29 +117,13 @@ const Cart = () => {
         ListFooterComponent={() =>
           totalItems > 0 && (
             <View className="gap-5">
-              <View className="mt-6 border border-gray-200 p-5 rounded-2xl">
-                <Text className="h3-bold text-dark-100 mb-5">
-                  Payment Summary
-                </Text>
-
-                <PaymentInfoStripe
-                  label={`Total Items (${totalItems})`}
-                  value={`$${totalPrice.toFixed(2)}`}
-                />
-                <PaymentInfoStripe label="Delivery Fee" value="$5.00"/>
-                <PaymentInfoStripe
-                  label="Discount"
-                  value="- $0.50"
-                  valueStyle="!text-success"
-                />
-                <View className="border-t border-gray-300 my-2"/>
-                <PaymentInfoStripe
-                  label="Total"
-                  value={`$${finalAmount.toFixed(2)}`}
-                  labelStyle="base-bold !text-dark-100"
-                  valueStyle="base-bold !text-dark-100 !text-right"
-                />
-              </View>
+              <PaymentSummary
+                totalItems={totalItems}
+                totalPrice={totalPrice}
+                deliveryFee={deliveryFee}
+                discount={discount}
+                finalAmount={finalAmount}
+              />
 
               {loading ? (
                 <ActivityIndicator size="large" color="#000"/>
@@ -204,6 +133,24 @@ const Cart = () => {
             </View>
           )
         }
+      />
+
+      <PaymentModal
+        refObj={successModalRef}
+        success
+        onPrimaryAction={() => {
+          successModalRef.current?.close();
+        }}
+        onSecondaryAction={() => console.log("Track Order")}
+      />
+
+      <PaymentModal
+        refObj={failModalRef}
+        success={false}
+        onPrimaryAction={() => {
+          failModalRef.current?.close();
+        }}
+        onSecondaryAction={() => console.log("Go Back")}
       />
     </SafeAreaView>
   );

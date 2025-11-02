@@ -41,6 +41,10 @@ import salad from "@/assets/images/salad.png";
 import success from "@/assets/images/success.png";
 import tomatoes from "@/assets/images/tomatoes.png";
 
+// Lottie
+import successAnimation from "@/assets/animations/success.json";
+import errorAnimation from "@/assets/animations/error.json";
+
 export const CATEGORIES = [
     {
         id: "1",
@@ -200,3 +204,8 @@ export const images = {
     trash,
     user,
 };
+
+export const animations = {
+  successAnimation,
+  errorAnimation
+}

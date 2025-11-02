@@ -21,6 +21,7 @@ const Profile = () => {
     <SafeAreaView className="bg-white h-full pb-28 px-5 pt-5">
       <CustomHeader title="Profile"/>
       <Button title="Logout" onPress={handleLogout}/>
+      <Button title="Login Success" onPress={() => router.replace("/login-success")}/>
     </SafeAreaView>
   );
 };
