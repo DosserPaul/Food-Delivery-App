@@ -1,3 +1,6 @@
+import {Customizations} from "@/type";
+import {images} from "@/constants";
+
 const dummyData = {
   categories: [
     {name: "Burgers", description: "Juicy grilled burgers"},
@@ -338,6 +341,96 @@ const dummyData = {
     },
   ],
 };
+
+export const CustomizationData: Customizations[] = [
+  // 🥑 Toppings
+  {
+    id: "avocado",
+    name: "Avocado",
+    price: 1.5,
+    type: "topping",
+    image_url: images.avocado,
+  },
+  {
+    id: "bacon",
+    name: "Bacon",
+    price: 2.0,
+    type: "topping",
+    image_url: images.bacon,
+  },
+  {
+    id: "cheese",
+    name: "Cheese",
+    price: 1.0,
+    type: "topping",
+    image_url: images.cheese,
+  },
+  {
+    id: "cucumber",
+    name: "Cucumber",
+    price: 0.5,
+    type: "topping",
+    image_url: images.cucumber,
+  },
+  {
+    id: "mushrooms",
+    name: "Mushrooms",
+    price: 1.2,
+    type: "topping",
+    image_url: images.mushrooms,
+  },
+  {
+    id: "onions",
+    name: "Onions",
+    price: 0.5,
+    type: "topping",
+    image_url: images.onions,
+  },
+  {
+    id: "tomatoes",
+    name: "Tomatoes",
+    price: 0.7,
+    type: "topping",
+    image_url: images.tomatoes,
+  },
+
+  // 🍟 Sides
+  {
+    id: "fries",
+    name: "Fries",
+    price: 3.5,
+    type: "side",
+    image_url: images.fries,
+  },
+  {
+    id: "mozarella-sticks",
+    name: "Mozarella Sticks",
+    price: 5.0,
+    type: "side",
+    image_url: images.mozarellaSticks,
+  },
+  {
+    id: "onion-rings",
+    name: "Onion Rings",
+    price: 4.0,
+    type: "side",
+    image_url: images.onionRings,
+  },
+  {
+    id: "coleslaw",
+    name: "Coleslaw",
+    price: 2.5,
+    type: "side",
+    image_url: images.coleslaw,
+  },
+  {
+    id: "salad",
+    name: "Salad",
+    price: 4.5,
+    type: "side",
+    image_url: images.salad,
+  },
+];
 
 
 export default dummyData;

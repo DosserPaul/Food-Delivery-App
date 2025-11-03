@@ -1,5 +1,13 @@
 import {Account, Avatars, Client, Databases, Functions, ID, Query, Storage} from "react-native-appwrite";
-import {Category, CreateUserParams, GetMenuParams, MenuItem, SignInParams} from "@/type";
+import {
+  Category,
+  CreateUserParams,
+  Customizations,
+  CustomizationsType,
+  GetMenuParams,
+  MenuItem,
+  SignInParams
+} from "@/type";
 
 
 export const appwriteConfig = {
@@ -105,6 +113,21 @@ export const getMenu = async ({category, query, limit = 6}: GetMenuParams): Prom
   );
 
   return res.documents as unknown as MenuItem[];
+};
+
+export const getMenuById = async ({id}: { id: string }) => {
+  try {
+    const res = await databases.getDocument({
+      databaseId: appwriteConfig.databaseId,
+      collectionId: appwriteConfig.menuCollectionId,
+      documentId: id,
+      queries: [Query.select(["*", "categories.*"])]
+    });
+    return res as unknown as MenuItem;
+  } catch (error: any) {
+    console.error("❌ Error fetching menu by ID:", error);
+    throw new Error(error.message || "Failed to fetch menu item.");
+  }
 };
 
 export const getCategories = async () => {

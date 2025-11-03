@@ -17,6 +17,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
 
   addItem: (item) => {
+    console.log(item)
     const customizations = item.customizations ?? [];
 
     const existing = get().items.find(
@@ -92,4 +93,47 @@ export const useCartStore = create<CartStore>((set, get) => ({
         ) ?? 0;
       return total + item.quantity * (base + customPrice);
     }, 0),
+
+  addCustomization: (id, newCustomizations) => {
+    const toAdd = Array.isArray(newCustomizations)
+      ? newCustomizations
+      : [newCustomizations];
+
+    set({
+      items: get().items.map((i) =>
+        i.id === id
+          ? {
+            ...i,
+            customizations: [
+              ...(i.customizations ?? []),
+              ...toAdd.filter(
+                (c) =>
+                  !(i.customizations ?? []).some(
+                    (existing) => existing.id === c.id
+                  )
+              ),
+            ],
+          }
+          : i
+      ),
+    });
+
+    console.log("Updated items:", get().items);
+  },
+
+  removeCustomization: (id, toRemove) => {
+    const toRemoveArray = Array.isArray(toRemove) ? toRemove : [toRemove];
+    set({
+      items: get().items.map((i) =>
+        i.id === id
+          ? {
+            ...i,
+            customizations: (i.customizations ?? []).filter(
+              (c) => !toRemoveArray.some((r) => r.id === c.id)
+            ),
+          }
+          : i
+      ),
+    });
+  },
 }));
